@@ -90,6 +90,13 @@
         color: white;
         position: fixed;
         pointer-events: auto;
+        /* start away from the Yes button */
+        left: 75vw;
+        top: 55vh;
+        /* smooth movement and scaling */
+        transition: left 0.6s ease, top 0.6s ease, transform 0.3s ease;
+        will-change: left, top, transform;
+        z-index: 10;
       }
 
       .card {
@@ -259,14 +266,14 @@
       <div class="content">
         <h1 class="question">Will you be my Valentine? 💕</h1>
         <div class="buttons-container">
-          <button class="btn btn-yes" onclick="showThankYou()">
+          <button class="btn btn-yes" id="yesBtn" onclick="showThankYou()">
             Yes
           </button>
           <button
             class="btn btn-no"
             id="noBtn"
+            style="left:75vw;top:55vh;"
             onmouseover="moveButton()"
-            onmouseenter="moveButton()"
             ontouchstart="moveButton()"
           >
             No
@@ -298,12 +305,39 @@
 
       function moveButton() {
         const btn = document.getElementById('noBtn');
-        const randomX = Math.random() * (window.innerWidth - 150);
-        const randomY = Math.random() * (window.innerHeight - 60);
-        
-        scale *= 0.9;
-        
-        btn.style.transform = `translate(${randomX}px, ${randomY}px) scale(${scale})`;
+        const yesBtn = document.getElementById('yesBtn');
+
+        const btnW = btn.offsetWidth;
+        const btnH = btn.offsetHeight;
+
+        const margin = 20;
+        const maxX = Math.max(window.innerWidth - btnW - margin, margin);
+        const maxY = Math.max(window.innerHeight - btnH - margin, margin);
+
+        const yesRect = yesBtn.getBoundingClientRect();
+
+        let randomX, randomY;
+        let attempts = 0;
+        do {
+          randomX = Math.floor(Math.random() * (maxX - margin)) + margin;
+          randomY = Math.floor(Math.random() * (maxY - margin)) + margin;
+          attempts++;
+          // break after some attempts to avoid infinite loop
+          if (attempts > 20) break;
+        } while (
+          randomX < yesRect.right &&
+          randomX + btnW > yesRect.left &&
+          randomY < yesRect.bottom &&
+          randomY + btnH > yesRect.top
+        );
+
+        // slowly reduce size but clamp it so it doesn't disappear
+        scale = Math.max(0.6, scale * 0.96);
+
+        // set position and scale — left/top animate via CSS transition
+        btn.style.left = randomX + 'px';
+        btn.style.top = randomY + 'px';
+        btn.style.transform = `scale(${scale})`;
       }
 
       function showThankYou() {
