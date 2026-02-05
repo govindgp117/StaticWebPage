@@ -1,0 +1,349 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Valentine's Day</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: 'Arial', sans-serif;
+        background: linear-gradient(135deg, #ff6b9d 0%, #feca57 100%);
+        min-height: 100vh;
+        overflow: hidden;
+      }
+
+      .valentine-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        padding: 20px;
+        animation: fadeIn 0.5s ease-in;
+      }
+
+      .thankyou-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        background: linear-gradient(135deg, #ff6b9d 0%, #c13584 100%);
+        padding: 20px;
+        animation: slideIn 0.5s ease-in;
+      }
+
+      .content {
+        text-align: center;
+      }
+
+      .question {
+        font-size: 3rem;
+        color: white;
+        margin-bottom: 3rem;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        font-weight: bold;
+      }
+
+      .buttons-container {
+        display: flex;
+        gap: 2rem;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        height: 100px;
+      }
+
+      .btn {
+        padding: 15px 40px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        border: none;
+        border-radius: 50px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      }
+
+      .btn-yes {
+        background-color: #2ecc71;
+        color: white;
+        position: static;
+      }
+
+      .btn-yes:hover {
+        background-color: #27ae60;
+        transform: scale(1.1);
+        box-shadow: 0 6px 20px rgba(46, 204, 113, 0.4);
+      }
+
+      .btn-yes:active {
+        transform: scale(0.95);
+      }
+
+      .btn-no {
+        background-color: #e74c3c;
+        color: white;
+        position: fixed;
+        pointer-events: auto;
+        /* start away from the Yes button */
+        left: 75vw;
+        top: 55vh;
+        /* smooth movement and scaling */
+        transition: left 0.6s ease, top 0.6s ease, transform 0.3s ease;
+        will-change: left, top, transform;
+        z-index: 10;
+      }
+
+      .card {
+        background: white;
+        padding: 4rem;
+        border-radius: 20px;
+        text-align: center;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        max-width: 500px;
+        animation: popIn 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+      }
+
+      .heart {
+        font-size: 4rem;
+        margin-bottom: 1rem;
+        animation: heartBeat 0.8s ease-in-out infinite;
+        display: inline-block;
+      }
+
+      .card h1 {
+        font-size: 3rem;
+        color: #ff6b9d;
+        margin-bottom: 1rem;
+        font-weight: bold;
+      }
+
+      .message {
+        font-size: 1.5rem;
+        color: #333;
+        margin-bottom: 1rem;
+        font-weight: 500;
+      }
+
+      .submessage {
+        font-size: 1.1rem;
+        color: #666;
+        margin-bottom: 2rem;
+      }
+
+      .hearts-animation {
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+        font-size: 2rem;
+      }
+
+      .hearts-animation span {
+        animation: float 3s ease-in-out infinite;
+        display: inline-block;
+      }
+
+      .hearts-animation span:nth-child(1) {
+        animation-delay: 0s;
+      }
+
+      .hearts-animation span:nth-child(2) {
+        animation-delay: 0.2s;
+      }
+
+      .hearts-animation span:nth-child(3) {
+        animation-delay: 0.4s;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(-20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes slideIn {
+        from {
+          opacity: 0;
+          transform: scale(0.8);
+        }
+        to {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+
+      @keyframes popIn {
+        0% {
+          transform: scale(0) rotateZ(-10deg);
+          opacity: 0;
+        }
+        50% {
+          transform: scale(1.05) rotateZ(5deg);
+        }
+        100% {
+          transform: scale(1) rotateZ(0deg);
+          opacity: 1;
+        }
+      }
+
+      @keyframes heartBeat {
+        0%,
+        100% {
+          transform: scale(1);
+        }
+        25% {
+          transform: scale(1.2);
+        }
+        50% {
+          transform: scale(1);
+        }
+        75% {
+          transform: scale(1.2);
+        }
+      }
+
+      @keyframes float {
+        0%,
+        100% {
+          transform: translateY(0px);
+          opacity: 1;
+        }
+        50% {
+          transform: translateY(-20px);
+          opacity: 0.7;
+        }
+      }
+
+      .hidden {
+        display: none;
+      }
+
+      @media (max-width: 768px) {
+        .question {
+          font-size: 2rem;
+          margin-bottom: 2rem;
+        }
+
+        .btn {
+          padding: 12px 30px;
+          font-size: 1.2rem;
+        }
+
+        .buttons-container {
+          gap: 1rem;
+        }
+
+        .card {
+          padding: 2rem;
+        }
+
+        .heart {
+          font-size: 3rem;
+        }
+
+        .card h1 {
+          font-size: 2rem;
+        }
+
+        .message {
+          font-size: 1.2rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="valentine-page" class="valentine-container">
+      <div class="content">
+        <h1 class="question">Will you be my Valentine? 💕</h1>
+        <div class="buttons-container">
+          <button class="btn btn-yes" id="yesBtn" onclick="showThankYou()">
+            Yes
+          </button>
+          <button
+            class="btn btn-no"
+            id="noBtn"
+            style="left:75vw;top:55vh;"
+            onmouseover="moveButton()"
+            ontouchstart="moveButton()"
+          >
+            No
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div id="thankyou-page" class="thankyou-container hidden">
+      <div class="card">
+        <div class="heart">💖</div>
+        <h1>Yes!</h1>
+        <p class="message">
+          Thank you for being my Valentine!
+        </p>
+        <p class="submessage">
+          You've made me the happiest person. 💕
+        </p>
+        <div class="hearts-animation">
+          <span>💕</span>
+          <span>💕</span>
+          <span>💕</span>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      let scale = 1;
+
+      function moveButton() {
+        const btn = document.getElementById('noBtn');
+        const yesBtn = document.getElementById('yesBtn');
+
+        const btnW = btn.offsetWidth;
+        const btnH = btn.offsetHeight;
+
+        const margin = 20;
+        const maxX = Math.max(window.innerWidth - btnW - margin, margin);
+        const maxY = Math.max(window.innerHeight - btnH - margin, margin);
+
+        const yesRect = yesBtn.getBoundingClientRect();
+
+        let randomX, randomY;
+        let attempts = 0;
+        do {
+          randomX = Math.floor(Math.random() * (maxX - margin)) + margin;
+          randomY = Math.floor(Math.random() * (maxY - margin)) + margin;
+          attempts++;
+          // break after some attempts to avoid infinite loop
+          if (attempts > 20) break;
+        } while (
+          randomX < yesRect.right &&
+          randomX + btnW > yesRect.left &&
+          randomY < yesRect.bottom &&
+          randomY + btnH > yesRect.top
+        );
+
+        // slowly reduce size but clamp it so it doesn't disappear
+        scale = Math.max(0.6, scale * 0.96);
+
+        // set position and scale — left/top animate via CSS transition
+        btn.style.left = randomX + 'px';
+        btn.style.top = randomY + 'px';
+        btn.style.transform = `scale(${scale})`;
+      }
+
+      function showThankYou() {
+        document.getElementById('valentine-page').classList.add('hidden');
+        document.getElementById('thankyou-page').classList.remove('hidden');
+      }
+    </script>
+  </body>
+</html>
