@@ -17,9 +17,9 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Upload site contents
-        uses: actions/upload-pages-artifact@v1
+        uses: actions/upload-artifact@v4
         with:
-          # deploy repository root (static files already in repo)
+          name: github-pages
           path: .
 
   deploy:
