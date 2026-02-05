@@ -49,6 +49,13 @@
   animation: heartBeat 0.8s ease-in-out infinite;
 }
 
+.thank-image {
+  width: 120px;
+  height: auto;
+  display: block;
+  margin: 0 auto 1rem;
+}
+
 @keyframes heartBeat {
   0%,
   100% {
